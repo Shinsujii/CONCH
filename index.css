@@ -1,0 +1,1309 @@
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: black;
+    font-family: 'MapoHongdaeFreedom';
+    font-family: 'Pretendard';
+    min-width: 1320px;
+    cursor: none; /* 기본 커서를 숨깁니다. */
+}
+input{
+    cursor: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+      .cursor__circle {
+        width: 30px;
+        height: 30px;
+        margin-top: -50%;
+        margin-left: -50%;
+        border-radius: 50%;
+        background-color: #FAF5C0;
+        border: solid 1px rgba(33, 33, 33, 0.5);
+        transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+          background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+          border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+          width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+          height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+          
+      }
+
+      #cursor.mousehover .cursor__circle {
+        width: 30px;
+        height: 30px;
+        background-color: #6a98e1;
+        border-color: #476FAF;
+        opacity: 0.8;
+      }
+      
+      #cursor.arrow::after {
+        content: '';
+        position: absolute;
+        left: -50%;
+        top: -50%;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://svgshare.com/i/MzQ.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      #cursor.subtle .cursor__circle {
+        opacity: 0.16;
+      }
+
+      #cursor.overlay .cursor__circle {
+        width: 48px;
+        height: 48px;
+        background-color: rgb(227, 222, 193);
+        border-color: transparent;
+      }
+    }
+  #cursor {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    will-change: transform;
+    mix-blend-mode: screen;
+  }
+
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+.top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    display: none;
+}
+
+/* 헤더 */
+header {
+    width: 100%;
+    margin: 20px auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.header_in {
+    width: 90%;
+    margin: auto;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-around;
+    font-family: 'MapoHongdaeFreedom';
+}
+
+h1:hover {
+    color: #333;
+}
+
+/* 가운데 헤더 */
+.ul1 {
+    font-weight: 600;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.ul1 li {
+    position: relative;
+    display: inline block;
+}
+
+.ul1>li>a {
+    display: block;
+    padding: 0 70px;
+}
+
+/* 가운데 헤더 호버 */
+
+.ul1 li img {
+    display: none;
+    position: absolute;
+    left: 40%;
+    top: 70%;
+    z-index: 1;
+}
+
+.ul1 li a:hover+img {
+    display: block;
+}
+
+.ul1 li:hover>img {
+    display: block;
+}
+
+/* 마지막 헤더 */
+.ul2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    position: relative;
+    z-index: 2;
+}
+
+.mp,
+.ch {
+    width: 20px;
+}
+
+.ul2 li {
+    margin-left: 30px;
+    font-family: 'Pretendard';
+    position: relative;
+}
+
+.ul2>li>a:hover {
+    color: #476FAF;
+}
+
+/* 원 */
+.circle {
+    display: none;
+    position: absolute;
+    top: 26px;
+    left: 7px;
+}
+
+/* 캘린더 */
+.calendar {
+    position: absolute;
+    top: 40px;
+    right: -140px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+.ul2 li:hover .circle,
+.ul2 li:hover .calendar,
+.ul2 li:hover .number {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.ul2 li a:hover .today {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.number {
+    position: absolute;
+    top: 218px;
+    right: -75px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.today {
+    position: absolute;
+    top: 250px;
+    left: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+/* 캘린더 */
+
+/* 서브메뉴 */
+
+.sub_box1 {
+    visibility: hidden;
+    width: 320px;
+    top: 20px;
+    left: 30px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+}
+
+.ul1 li:hover .sub_box1 {
+    visibility: visible;
+    opacity: 1;
+}
+
+.sub {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.sub li {
+    font-size: 12px;
+    margin: 25px 18px;
+}
+
+.sub>li>a:hover {
+    color: #476FAF;
+}
+
+/* 가운데 */
+
+.wrapper {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: -65px;
+    right: 0px;
+  }
+  
+  .typing-demo {
+    width: 28ch;
+    animation: typing 2.5s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: 'Pretendard';
+    font-size: 2.5em;
+    font-weight: 500;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
+.search{
+    width: 1320px;
+    margin: auto;
+    position: relative;
+}
+.search_in{
+    position: absolute;
+    top: -73px;
+}
+.search2{
+    position: absolute;
+    top: 24px;
+    right: 20px;
+}
+.searchmain{
+    position: absolute;
+    top: -55px;
+    left: 0px;
+}
+.searchmain a{
+    position: absolute;
+    top: 3px;
+    left: 30px;
+    color: gray;
+}
+.header_in1_all {
+    background-image: url(./img/center2.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.header_in1 {
+    font-family: 'pretendard';
+    width: 1000px;
+    margin: auto;
+    position: relative;
+}
+
+.header_in1_center {
+    padding-top: 110px;
+}
+
+textarea {
+    flex-wrap: wrap;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.nametext {
+    padding: 12px 10px;
+    width: 370px;
+    font-size: 14px;
+    border-width: 1px;
+    border-radius: 0px;
+    border-style: solid;
+    border-color: #adabad;
+    background-color: #ffffff;
+    color: #1f1f1f;
+    text-shadow: 0px 0px 0px rgba(42, 42, 42, .75);
+    font-family: 'Pretendard';
+    outline: none;
+    margin-top: 10px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+    display: none;
+}
+
+/* (체크박스, 텍스트) 정렬 맞추기 */
+.checkbox_label,
+.radio_label {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.checkbox_text{
+    margin-top: -5px;
+}
+/* 체크박스 디자인 */
+.checkbox_icon::before,
+.radio_icon::before {
+    content: '';
+    display: block;
+    margin-right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: 1px solid #9da3a5;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+}
+
+.radio_icon::before {
+    border-radius: 50px;
+}
+
+
+.search1{
+    padding: 12px 10px;
+    width: 200px;
+    font-size: 14px;
+    border-width: 1px;
+    border-radius: 0px;
+    border-style: solid;
+    border-color: #adabad;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #1f1f1f;
+    text-shadow: 0px 0px 0px rgba(42, 42, 42, .75);
+    font-family: 'Pretendard';
+    outline: none;
+    margin-top: 10px;
+}
+
+/* checked */
+.checkbox_label input:checked+.checkbox_icon::before,
+.radio_label input:checked+.radio_icon::before {
+    /*   transition: all 0.15s ease; */
+    background: url(https://intranet.adef.co.kr/asset/images/ic_check.png) #333 no-repeat center;
+    ;
+    border: none;
+}
+
+.checkboxall {
+    margin: 20px 0px;
+}
+
+.header_in1_center h4 {
+    text-align: center;
+    border: #9da3a5 solid 1px;
+    display: inline-block;
+    padding: 5px 20px;
+    font-weight: 500;
+}
+
+.header_in1_center h4:hover {
+    background-color: #333;
+    color: #ffffff;
+}
+
+/* 애니메이션 */
+#animation-container {
+    white-space: nowrap;
+    position: absolute;
+    left: -390px;
+    width: 1920px;
+}
+
+#animation-container span {
+    display: inline-block;
+    font-size: 60px;
+    word-spacing: 20px;
+    font-family: 'MapoHongdaeFreedom';
+}
+
+#animation-container span:nth-child(1) {
+    animation: roll 3s ease-in-out forwards;
+}
+
+#animation-container span:nth-child(2) {
+    animation: roll2 3s ease-in-out forwards;
+}
+
+#animation-container span:nth-child(3) {
+    animation: roll3 3s ease-in-out forwards;
+}
+
+#animation-container span:nth-child(4) {
+    animation: roll4 3s ease-in-out forwards;
+}
+
+#animation-container span:nth-child(5) {
+    animation: roll5 3s ease-in-out forwards;
+}
+
+@keyframes roll {
+    0% {
+        transform: translateX(0) translateY(-20px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(900px) translateY(-18px) rotate(740deg);
+    }
+}
+
+@keyframes roll2 {
+    0% {
+        transform: translateX(0) translateY(-20px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(900px) translateY(-20px) rotate(760deg);
+    }
+}
+
+@keyframes roll3 {
+    0% {
+        transform: translateX(0) translateY(-20px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(900px) translateY(-20px) rotate(750deg);
+    }
+}
+
+@keyframes roll4 {
+    0% {
+        transform: translateX(0) translateY(-20px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(900px) translateY(-20px) rotate(680deg);
+    }
+}
+
+@keyframes roll5 {
+    0% {
+        transform: translateX(0) translateY(-20px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(900px) translateY(-20px) rotate(750deg);
+    }
+}
+
+/* 애니메이션 */
+
+/* 미드1 */
+/* 미드1 왼쪽 */
+.mid {
+    width: 1320px;
+    margin: 110px auto;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+
+.midleft {
+    width: 605px;
+}
+
+.midleft>a:hover {
+    color: #476FAF;
+}
+
+.midleft_in1 {
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.midleft_in1 ul {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.midleft_in1>img {
+    filter: grayscale(100%);
+    /* 흑백 필터를 적용합니다. */
+    transition: filter 0.5s ease;
+    /* 효과 전환에 걸리는 시간을 설정합니다. */
+}
+
+.midleft_in1>img:hover {
+    filter: grayscale(0%);
+    /* 마우스를 올렸을 때 흑백 필터를 제거합니다. */
+}
+
+.midleft_in1 p {
+    margin: 20px 0;
+}
+/* 미드1 왼쪽 */
+/* 미드1 오른쪽 */
+.midright {
+    width: 605px;
+}
+
+.midright1 .midright_in1,
+.midright_in2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    width: 556px;
+}
+
+.midright_in1 li {
+    border: black solid 1px;
+    border-radius: 20px;
+    width: 120px;
+    text-align: center;
+}
+
+.midright_in1 a {
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.midright_in1 a:hover {
+    color: #476FAF;
+    display: block;
+}
+
+.midright_in2 {
+    margin: 10px 0;
+}
+
+.midright_in2 a {
+    font-size: 16px;
+}
+
+.midright_in2 a:hover {
+    text-decoration: underline;
+}
+
+.midright2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding-top: 30px;
+}
+
+.midright2 img {
+    filter: grayscale(100%);
+    /* 흑백 필터를 적용합니다. */
+    transition: filter 0.5s ease;
+    /* 효과 전환에 걸리는 시간을 설정합니다. */
+}
+
+.midright2 img:hover {
+    filter: grayscale(0%);
+    /* 마우스를 올렸을 때 흑백 필터를 제거합니다. */
+}
+
+.midright2 h2:hover {
+    color: #476FAF;
+}
+
+.midright2 ul {
+    margin-bottom: 45px;
+}
+
+.midright2 span {
+    color: #476FAF;
+}
+
+.midright2 h3 {
+    font-size: 20px;
+}
+
+.midpage {
+    width: 1320px;
+    margin: 40px auto;
+    position: relative;
+}
+
+.midpage1 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-around;
+}
+
+.midpage2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.midpage2 img {
+    margin: 0 10px;
+}
+
+.midpage2 a:hover {
+    text-decoration: underline;
+}
+
+.midpage3 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    margin: 20px 0;
+}
+
+.midpage3 a {
+    display: block;
+    border: black solid 1px;
+    border-radius: 20px;
+    width: 120px;
+    text-align: center;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.midpage1 p {
+    margin-bottom: 20px;
+}
+
+.slide {
+    width: 1320px;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide .swiper-slide {
+    font-size: 18px;
+    background: #fff; 
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.slide .swiper-slide div{
+    width: 895px;
+}
+/* 미드1 오른쪽 */
+/* 미드1 */
+
+/* 미드2 */
+.mid2{
+    width: 1320px;
+    margin: 110px auto;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+/* 미드2 왼쪽 */
+.mid2left{
+    width: 630px;
+}
+.mid2left_in{
+    width: 620px;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    align-items: center;
+}
+.mid2left_in img{
+    margin-left: 10px;
+}
+.mid2left_in a:hover{
+    text-decoration: underline;
+}
+.mid2left ul{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+.mid2left_in1{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+.mid2left_in2{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.mid2left_in1{
+    position: relative;
+}
+.hover1{
+    position: absolute;
+    left: 0px;
+    opacity: 0;
+    perspective: 1000px;
+}
+.mid2left_in1:hover img{
+    transform: rotateY(180deg);
+    opacity: 1;
+}
+.mid2left_in1 img{
+    transition: 1s;
+}
+/* 미드2 왼쪽 */
+
+/* 미드2 오른쪽 */
+.mid2_top{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.mid2_top img{
+    margin-left: 10px;
+}
+.mid2_top a:hover{
+    text-decoration: underline;
+} 
+.mid2right_in{
+    width: 660px;
+    position: relative;
+}
+.move1{
+    position: absolute;
+    top: 20px;
+    right: 50px;
+}
+.move2{
+    position: absolute;
+    top: 160px;
+    right: 50px;
+}
+.move3{
+    position: absolute;
+    bottom: 110px;
+    right: 50px;
+}
+.move4{
+    position: absolute;
+    top: 185px;
+    left: 260px;
+}
+.best1{
+    position: absolute;
+    bottom: 35px;
+    left: 28px;
+}
+.best2{
+    position: absolute;
+    top: 15px;
+    right: 210px;
+}
+.best3{
+    position: absolute;
+    top: 160px;
+    right: 210px;
+}
+.best4{
+    position: absolute;
+    bottom: 30px;
+    right: 210px;
+}
+
+.mid2right_in div img {
+    filter: grayscale(100%);
+    /* 흑백 필터를 적용합니다. */
+    transition: filter 0.5s ease;
+    /* 효과 전환에 걸리는 시간을 설정합니다. */
+}
+
+.mid2right_in div img:hover {
+    filter: grayscale(0%);
+    /* 마우스를 올렸을 때 흑백 필터를 제거합니다. */
+}
+
+/* 미드2 */
+
+/* 미드3 */
+.mid3{
+    width: 1320px;
+    margin: auto;
+}
+.mid3 h2:hover{
+    color: #476FAF;
+}
+.mid3_in{
+   border: 1px solid black;
+   border-radius: 30px;
+   padding: 30px;
+   margin-top: 20px;
+   margin-bottom: 100px;
+}
+.mid3_in1{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: 1px solid #333; 
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+
+.mid3_in1 h4{
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.mid3_in1 h4:hover{
+    font-weight: 600;
+}
+.mid3_in2{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: center;
+}
+.mid3_in2 a{
+    display: block;
+    margin: 0 20px;
+    font-size: medium;
+}
+.mid3_in2 a:hover{
+    font-weight: 500;
+}
+.next1{
+    position: absolute;
+    top: 20px;
+    right: 90px;
+}
+.play{
+    width: 1320px;
+    margin: auto;
+    position: relative;
+    margin-bottom: 100px;
+}
+.play h2{
+    position: absolute;
+    bottom: 70px;
+    left: 70px;
+    font-size: 40px;
+    color: white;
+    line-height: 47px;
+}
+.play h2:hover{
+    color: #1f1f1f;
+}
+.play ul a{
+    display: block;
+    font-size: 17px;
+}
+.play ul a:hover{
+    font-weight: 500;
+}
+.play1{
+    position: absolute;
+    top: 90px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+.play2{
+    position: absolute;
+    top: 130px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+.play3{
+    position: absolute;
+    top: 170px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+.play4{
+    position: absolute;
+    top: 210px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+.play5{
+    position: absolute;
+    top: 250px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+.play6{
+    position: absolute;
+    top: 290px;
+    left: 550px;
+    width: 600px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    border-bottom: solid 1px gray;
+}
+/* 미드3 */
+
+/* 푸터 */
+footer{
+    max-width: 1920px;
+    margin: 100px auto 0;
+    height: auto;
+    overflow: hidden;
+    
+}
+.footer1{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+.footer1left, .footer1right{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+.footer1left a{
+    padding: 5px;
+    display: block;
+}
+.footer1left a:hover{
+    filter: invert(30%);
+}
+.footer1left{
+    margin-left: 30px;
+}
+.footer1right a{
+    padding: 30px;
+    display: block;
+}
+.footer1right a:hover{
+    color: #476FAF;
+}
+.footer2{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+.footer2right_in{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+.footer2left{
+    margin-left: 30px;
+}
+.footer2right{
+    padding-right: 30px;
+}
+.footer2right_in{
+    justify-content: space-between;
+    width: 700px;
+    margin: 5px 0;
+}
+.footer2right>li{
+    display: block;
+    border-bottom: solid black 1px;
+}
+.footerimg{
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    max-width: 100%;
+    margin-top: 20px;
+}
+.footerimg img{
+    max-width: 1920px;
+    width: 100%;
+    height: auto;
+}
+.footer2right_in span{
+    color: #476FAF;
+}
+.footer2right_in a:hover{
+    font-weight: 500;
+}
+.footer2left a:hover{
+    font-weight: 500;
+}
+.grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
+    gap: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.grid-item{
+    border-radius: 8px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+.grid_track {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    width: calc(1200px * 12); /* 이미지 개수에 맞게 조정 */
+    animation: scroll 20s linear infinite;
+}
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 5)); /* 이미지 개수의 절반만큼 이동 */
+    }
+}
+/* 푸터 */
