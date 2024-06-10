@@ -1,0 +1,1033 @@
+@charset "utf-8";
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* brief */
+body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: black;
+    font-family: 'MapoHongdaeFreedom';
+    font-family: 'Pretendard';
+    min-width: 1320px;
+    cursor: none;
+    /* 기본 커서를 숨깁니다. */
+}
+
+input {
+    cursor: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cursor__circle {
+        width: 30px;
+        height: 30px;
+        margin-top: -50%;
+        margin-left: -50%;
+        border-radius: 50%;
+        background-color: #FAF5C0;
+        border: solid 1px rgba(33, 33, 33, 0.5);
+        transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+    }
+
+    #cursor.mousehover .cursor__circle {
+        width: 30px;
+        height: 30px;
+        background-color: #6a98e1;
+        border-color: #476FAF;
+        opacity: 0.8;
+    }
+
+    #cursor.arrow::after {
+        content: '';
+        position: absolute;
+        left: -50%;
+        top: -50%;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://svgshare.com/i/MzQ.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    #cursor.subtle .cursor__circle {
+        opacity: 0.16;
+    }
+
+    #cursor.overlay .cursor__circle {
+        width: 48px;
+        height: 48px;
+        background-color: rgb(227, 222, 193);
+        border-color: transparent;
+    }
+}
+
+#cursor {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    will-change: transform;
+    mix-blend-mode: screen;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    display: none;
+}
+
+/* 헤더 */
+header {
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: background-color 0.3s;
+    /* 배경색 전환 애니메이션 */
+    padding: 20px 0px;
+}
+
+.header-scrolled {
+    background-color: rgba(255, 255, 255, 0.5);
+    /* 스크롤 시 적용될 배경색 */
+    border-bottom: 1px solid black;
+}
+
+.header_in {
+    width: 90%;
+    margin: auto;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-around;
+    font-family: 'MapoHongdaeFreedom';
+}
+
+h1:hover {
+    color: #333;
+}
+
+/* 가운데 헤더 */
+.ul1 {
+    font-weight: 600;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.ul1 li {
+    position: relative;
+    display: inline block;
+}
+
+.ul1>li>a {
+    display: block;
+    padding: 0 70px;
+}
+
+/* 가운데 헤더 호버 */
+
+.ul1 li img {
+    display: none;
+    position: absolute;
+    left: 40%;
+    top: 70%;
+    z-index: 1;
+}
+
+.ul1 li a:hover+img {
+    display: block;
+}
+
+.ul1 li:hover>img {
+    display: block;
+}
+
+/* 마지막 헤더 */
+.ul2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    position: relative;
+    z-index: 2;
+}
+
+.mp,
+.ch {
+    width: 20px;
+}
+
+.ul2 li {
+    margin-left: 30px;
+    font-family: 'Pretendard';
+    position: relative;
+}
+
+.ul2>li>a:hover {
+    color: #476FAF;
+}
+
+/* 원 */
+.circle {
+    display: none;
+    position: absolute;
+    top: 26px;
+    left: 7px;
+}
+
+/* 캘린더 */
+.calendar {
+    position: absolute;
+    top: 40px;
+    right: -140px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+.ul2 li:hover .circle,
+.ul2 li:hover .calendar,
+.ul2 li:hover .number {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.ul2 li a:hover .today {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.number {
+    position: absolute;
+    top: 218px;
+    right: -75px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.today {
+    position: absolute;
+    top: 250px;
+    left: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+/* 캘린더 */
+
+/* 서브메뉴 */
+.ul1 li:hover .sub_box1 {
+    visibility: visible;
+    opacity: 1;
+}
+
+.sub_box1 {
+    visibility: hidden;
+    width: 150px;
+    top: 40px;
+    left: 20px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+}
+
+.sub {
+    transition: visibility 0s, opacity 0.5s linear;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    border: black 1px solid;
+}
+
+.sub li {
+    font-size: 12px;
+    margin: 20px 18px;
+    padding: 5px;
+}
+
+.sub>li>a:hover {
+    color: #476FAF;
+}
+
+/* 비디오 */
+video {
+    width: 1200px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 140px;
+}
+
+.video-container {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: center;
+    align-items: center;
+}
+
+.video_top {
+    position: relative;
+    width: 1200px;
+    margin: auto;
+}
+
+.videotop {
+    position: absolute;
+    top: 160px;
+    right: 160px;
+}
+
+.videotop1 {
+    position: absolute;
+    top: 200px;
+    right: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.videotop:hover .videotop1 {
+    opacity: 1;
+    visibility: visible;
+
+}
+
+.videotop1:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.videomidd {
+    position: absolute;
+    bottom: 230px;
+    right: 160px;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    text-align: center;
+    justify-content: center;
+}
+
+.videomidd1 {
+    margin-right: 5px;
+}
+
+.videomidd1in a {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.37);
+    border: rgba(255, 255, 255, 0) solid 1px;
+    border-radius: 20px;
+    width: 190px;
+    margin-top: 5px;
+    padding: 2px;
+    color: white;
+}
+
+.videomidd1in1 a {
+    width: 100px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.37);
+    border: rgba(255, 255, 255, 0) solid 1px;
+    border-radius: 20px;
+    margin-top: 5px;
+    padding: 2px;
+    color: white;
+    margin-left: 90px;
+}
+
+.videomidd2 a {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.37);
+    border: rgba(255, 255, 255, 0) solid 1px;
+    border-radius: 20px;
+    width: 100px;
+    margin-top: 5px;
+    padding: 2px;
+    color: white;
+}
+
+.videomid {
+    position: absolute;
+    bottom: 230px;
+    left: 160px;
+    color: white;
+}
+
+.videomid a {
+    color: white;
+}
+
+.videomid h1 {
+    background-color: rgba(255, 255, 255, 0.37);
+    border: rgba(255, 255, 255, 0) solid 1px;
+    border-radius: 20px;
+    width: 470px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* 비디오 */
+
+/* 브리핑 */
+.briefmid {
+    width: 1200px;
+    margin: auto;
+}
+
+.briefmid ul {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.briefmid1 {
+    margin: 0 50px;
+    border: 1px solid #333;
+    width: 100px;
+    border-radius: 20px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.brief1 {
+    width: 1200px;
+    margin: 30px auto;
+    position: relative;
+}
+
+.brief1 img {
+    filter: grayscale(100%);
+    /* 흑백 필터를 적용합니다. */
+    transition: filter 0.5s ease;
+    /* 효과 전환에 걸리는 시간을 설정합니다. */
+}
+
+.brief1 img:hover {
+    filter: grayscale(0%);
+    /* 마우스를 올렸을 때 흑백 필터를 제거합니다. */
+}
+
+.brief1in {
+    position: absolute;
+    top: 110px;
+    left: 400px;
+    background-color: rgba(255, 255, 255, 0.499);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.brief1in h2 {
+    line-height: 24px;
+}
+
+.brief1in h2:hover {
+    text-decoration: underline;
+}
+
+.brief1in p {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.brieful {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    width: 1200px;
+    margin: 30px auto;
+    justify-content: space-evenly;
+}
+
+.brieful1 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    width: 1200px;
+    margin: 30px auto;
+    justify-content: space-evenly;
+    margin-top: 80px;
+}
+
+.brieful1 h5 {
+    margin: 20px 0;
+}
+
+.briefmid li {
+    position: relative;
+}
+
+/* 브리프메뉴들 */
+.briefpo1 {
+    position: relative;
+}
+
+.movebrief {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.brieful h5 {
+    margin: 20px 0;
+}
+
+.briefpo2 {
+    position: relative;
+}
+
+.movebrief1 {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.briefpo3 {
+    position: relative;
+}
+
+.movebrief2 {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.briefpo4 {
+    position: relative;
+}
+
+.movebrief3 {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.briefpo5 {
+    position: relative;
+}
+
+.movebrief4 {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.briefpo6 {
+    position: relative;
+}
+
+.movebrief5 {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.briefmid2 {
+    border: 1px solid #333;
+    width: 130px;
+    border-radius: 20px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/*  */
+
+/* 브리프 호버 */
+.group1 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+    display: block;
+}
+
+.group2 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+}
+
+.group3 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+}
+
+.group4 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+}
+
+.group5 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+}
+
+.group6 {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    backdrop-filter: blur(40px);
+    mix-blend-mode: multiply;
+}
+
+/* 브리프그룹호버 */
+.briefpo1 .group1 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo1:hover .group1 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+.briefpo2 .group2 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo2:hover .group2 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+.briefpo3 .group3 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo3:hover .group3 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+.briefpo4 .group4 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo4:hover .group4 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+.briefpo5 .group5 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo5:hover .group5 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+.briefpo6 .group6 {
+    opacity: 0;
+    /* 기본적으로 숨기기 */
+    transition: opacity 0.5s ease-in-out;
+    /* 트랜지션 추가 */
+}
+
+.briefpo6:hover .group6 {
+    opacity: 1;
+    /* 호버 시 나타나기 */
+}
+
+/* 브리프그룹호버 */
+
+/* 브리프 호버 */
+.briefmid1 a:hover h2 {
+    background-color: #000000;
+    color: white;
+}
+
+.briefmid2 a:hover h2 {
+    background-color: #000000;
+    color: white;
+}
+
+.briefmid1 a:hover h2,
+.briefmid2 a:hover h2,
+.briefmid1.active a h2,
+.briefmid2.active a h2 {
+    background-color: #000000;
+    color: white;
+}
+
+.briefdiv1,
+.briefdiv2 {
+    display: none;
+}
+
+.briefdiv1.active,
+.briefdiv2.active {
+    display: block;
+}
+
+/* 브리핑 */
+
+/* viewmore 버튼 */
+.viewmore {
+    width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+    display: block;
+    transition: filter 0.3s ease;
+    margin-top: 80px;
+}
+
+.viewmore:hover {
+    filter: invert(100%);
+}
+
+/* viewmore 버튼 */
+
+/* 플레이리스트 */
+.playlist {
+    width: 1200px;
+    margin: 30px auto;
+}
+
+.playlist>a {
+    display: block;
+    border-bottom: #333 solid 1px;
+    padding-bottom: 5px;
+    font-size: 18px;
+}
+
+.playlist ul {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.playlist ul img {
+    margin-left: 5px;
+}
+
+.playlist ul a {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    display: block;
+}
+
+.pl3 a:hover {
+    text-decoration: underline;
+}
+
+.pl2 {
+    border-bottom: #333 solid 1px;
+}
+
+.playlist ul span {
+    color: #476FAF;
+}
+
+/* 플레이리스트 */
+
+/* 슬라이드꾸미기 */
+.flowslide {
+    width: 1200px;
+    margin: 50px auto;
+    padding: 0 50px 40px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.flowslide_inner {
+    width: 1200px;
+    overflow: hidden;
+}
+
+.flowslide .swiper-wrapper {
+    transition-timing-function: linear;
+}
+
+.flowslide .swiper-slide a {
+    width: 1200px;
+}
+
+.flowslide .swiper-slide img {
+    display: block;
+    width: 100%;
+}
+
+/* 슬라이드꾸미기 */
+
+/* 푸터 */
+footer {
+    max-width: 1920px;
+    margin: 100px auto 0;
+    height: auto;
+    overflow: hidden;
+
+}
+
+.footer1 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+
+.footer1left,
+.footer1right {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.footer1left a {
+    padding: 5px;
+    display: block;
+}
+
+.footer1left a:hover {
+    filter: invert(30%);
+}
+
+.footer1left {
+    margin-left: 30px;
+}
+
+.footer1right a {
+    padding: 30px;
+    display: block;
+}
+
+.footer1right a:hover {
+    color: #476FAF;
+}
+
+.footer2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-between;
+}
+
+.footer2right_in {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.footer2left {
+    margin-left: 30px;
+}
+
+.footer2right {
+    padding-right: 30px;
+}
+
+.footer2right_in {
+    justify-content: space-between;
+    width: 700px;
+    margin: 5px 0;
+}
+
+.footer2right>li {
+    display: block;
+    border-bottom: solid black 1px;
+}
+
+.footerimg {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+.footerimg img {
+    max-width: 1920px;
+    width: 100%;
+    height: auto;
+}
+
+.footer2right_in span {
+    color: #476FAF;
+}
+
+.footer2right_in a:hover {
+    font-weight: 500;
+}
+
+.footer2left a:hover {
+    font-weight: 500;
+}
+
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
+    gap: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.grid-item {
+    border-radius: 8px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.grid_track {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    width: calc(1200px * 12);
+    /* 이미지 개수에 맞게 조정 */
+    animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-250px * 5));
+        /* 이미지 개수의 절반만큼 이동 */
+    }
+}
+
+/* 푸터 */
