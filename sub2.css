@@ -1,0 +1,652 @@
+@charset "utf-8";
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* about */
+body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: black;
+    font-family: 'MapoHongdaeFreedom';
+    font-family: 'Pretendard';
+    min-width: 1320px;
+    cursor: none;
+    /* 기본 커서를 숨깁니다. */
+}
+
+input {
+    cursor: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cursor__circle {
+        width: 30px;
+        height: 30px;
+        margin-top: -50%;
+        margin-left: -50%;
+        border-radius: 50%;
+        background-color: #FAF5C0;
+        border: solid 1px rgba(33, 33, 33, 0.5);
+        transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+    }
+
+    #cursor.mousehover .cursor__circle {
+        width: 30px;
+        height: 30px;
+        background-color: #6a98e1;
+        border-color: #476FAF;
+        opacity: 0.8;
+    }
+
+    #cursor.arrow::after {
+        content: '';
+        position: absolute;
+        left: -50%;
+        top: -50%;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://svgshare.com/i/MzQ.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    #cursor.subtle .cursor__circle {
+        opacity: 0.16;
+    }
+
+    #cursor.overlay .cursor__circle {
+        width: 48px;
+        height: 48px;
+        background-color: rgb(227, 222, 193);
+        border-color: transparent;
+    }
+}
+
+#cursor {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    will-change: transform;
+    mix-blend-mode: screen;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    display: none;
+}
+
+/* 헤더 */
+header {
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
+    padding: 20px 0px;
+}
+.header-scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* 스크롤 시 적용될 배경색 */
+    border-bottom: 1px solid black;
+}
+.header_in {
+    width: 90%;
+    margin: auto;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    justify-content: space-around;
+    font-family: 'MapoHongdaeFreedom';
+}
+
+h1:hover {
+    color: #333;
+}
+
+/* 가운데 헤더 */
+.ul1 {
+    font-weight: 600;
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.ul1 li {
+    position: relative;
+    display: inline block;
+}
+
+.ul1>li>a {
+    display: block;
+    padding: 0 70px;
+}
+
+/* 가운데 헤더 호버 */
+
+.ul1 li img {
+    display: none;
+    position: absolute;
+    left: 40%;
+    top: 70%;
+    z-index: 1;
+}
+
+.ul1 li a:hover+img {
+    display: block;
+}
+
+.ul1 li:hover>img {
+    display: block;
+}
+
+/* 마지막 헤더 */
+.ul2 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    position: relative;
+    z-index: 2;
+}
+
+.mp,
+.ch {
+    width: 20px;
+}
+
+.ul2 li {
+    margin-left: 30px;
+    font-family: 'Pretendard';
+    position: relative;
+}
+
+.ul2>li>a:hover {
+    color: #476FAF;
+}
+
+/* 원 */
+.circle {
+    display: none;
+    position: absolute;
+    top: 26px;
+    left: 7px;
+}
+
+/* 캘린더 */
+.calendar {
+    position: absolute;
+    top: 40px;
+    right: -140px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+.ul2 li:hover .circle,
+.ul2 li:hover .calendar,
+.ul2 li:hover .number {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.ul2 li a:hover .today {
+    visibility: visible;
+    opacity: 1;
+    /* hover 시 visibility 전환 지연을 0s로 설정합니다. */
+}
+
+.number {
+    position: absolute;
+    top: 218px;
+    right: -75px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.today {
+    position: absolute;
+    top: 250px;
+    left: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+    transition-delay: 0s, 0s;
+}
+
+/* 캘린더 */
+
+/* 서브메뉴 */
+
+.sub_box1 {
+    visibility: hidden;
+    width: 150px;
+    top: 40px;
+    left: 20px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+}
+.sub {
+    transition: visibility 0s, opacity 0.5s linear;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    border: black 1px solid;
+}
+
+.sub li {
+    font-size: 12px;
+    margin: 20px 18px;
+    padding: 5px;
+}
+.ul1 li:hover .sub_box1 {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.sub>li>a:hover {
+    color: #476FAF;
+}
+/* 서브메뉴 끝 */
+/* 어바웃 */
+.aboutall {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+}
+
+.ani3 {
+    padding: 100px 0;
+    width: 90px;
+    display: inline-block;
+    animation: rotate 4s linear infinite;
+}
+
+.ani3 img {
+    width: 100%;
+    height: auto;
+}
+
+.about_in {
+    width: 1000px;
+    margin: 100px 0 0 auto;
+
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 어바웃 */
+/* 어바웃1 */
+.about1 {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+    flex-direction: column;
+    width: 340px;
+    /* 사이드바 너비 설정 */
+    border-right: #333 1px solid;
+    transition: top 0.7s ease-out;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10%;
+    left: 0;
+    height: 100vh;
+}
+
+.about1 a {
+    display: block;
+    border-bottom: #333 solid 1px;
+    padding: 10px 0;
+    font-weight: 500;
+}
+
+
+.bold {
+    padding: 10px 0 20px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.office1 {
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+}
+
+.p1 {
+    margin: 20px 0 40px;
+}
+
+.p1 span {
+    color: #476FAF;
+}
+
+.p2:hover {
+    text-decoration: underline;
+}
+
+.p1_1:hover {
+    text-decoration: underline;
+}
+
+/* 어바웃1 */
+
+/* 어바웃2 */
+.about2 {
+    padding: 20px 20px 120px;
+}
+
+.about2 p {
+    font-size: 20px;
+}
+
+.about2 .p2 {
+    font-weight: 600;
+}
+
+
+.about2 a {
+    display: block;
+}
+
+.about2 a:hover {
+    filter: invert(100%);
+    
+}
+
+/* 어바웃2 */
+
+/* 어바웃3 */
+.about3 {
+    padding: 20px 20px 120px;
+}
+
+.about3 p {
+    font-size: 20px;
+}
+
+.about3 .p2 {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.about3.active {
+    display: block;
+    /* 활성화되면 보이도록 설정 */
+}
+
+.brandstoryw {
+    width: 983px;
+    text-align: center;
+    display: block;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+/* 어바웃3 */
+
+
+
+/* 어바웃4 */
+.about4 {
+    padding: 20px;
+    margin-bottom: 120px;
+}
+
+.about4 p {
+    font-size: 20px;
+}
+
+.about4 .p2 {
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.about4.active {
+    display: block;
+    /* 활성화되면 보이도록 설정 */
+}
+
+.logow {
+    width: 983px;
+    display: block;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+.an1{
+    position: absolute;
+    top: 40px;
+    right: 180px;
+    display: inline-block;
+    animation: bounce .3s ease infinite alternate;
+}
+@keyframes bounce {
+    100% {
+      top: -20px;
+      text-shadow: 0 1px 0 #CCC,
+                   0 2px 0 #CCC,
+                   0 3px 0 #CCC,
+                   0 4px 0 #CCC,
+                   0 5px 0 #CCC,
+                   0 6px 0 #CCC,
+                   0 7px 0 #CCC,
+                   0 8px 0 #CCC,
+                   0 9px 0 #CCC,
+                   0 50px 25px rgba(0, 0, 0, .2);
+    }
+  }
+.about4 ul {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.about4_in {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.about4colorin {
+    margin-left: 230px;
+    margin-bottom: 50px;
+}
+
+.aboutli {
+    margin-left: 90px;
+}
+
+/* 어바웃4 */
+
+/* 어바웃5 */
+.about5 {
+    padding: 20px;
+    margin-bottom: 150px;
+}
+
+.about5 .sp1 {
+    color: #F9A458;
+}
+
+.about5 p {
+    font-size: 20px;
+}
+
+.about5 span {
+    font-weight: 600;
+}
+
+.about5 .p1_1 {
+    margin-top: 80px;
+    font-weight: 600;
+    border-top: 1px #333 solid;
+    padding-top: 10px;
+}
+
+.about5 .p2 {
+    font-weight: 600;
+    margin-top: 10px;
+    color: #F9A458;
+}
+
+.about5.active {
+    display: block;
+    /* 활성화되면 보이도록 설정 */
+}
+
+.mascotw {
+    width: 983px;
+    display: block;
+    padding-bottom: 60px;
+    border-bottom: 1px solid #333;
+}
+
+.about5 ul {
+    display: -webkit-box;
+    /*ios, 사파리, 크롬*/
+    display: -moz-box;
+    /*파이어폭스*/
+    display: -ms-flexbox;
+    /*인터넷 익스플로러, 엣지*/
+    display: flex;
+    /*표준 맨 마직막에 위치*/
+}
+
+.keywordin {
+    margin-left: 50px;
+}
+
+.keyword a {
+    border: #333 solid 1px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 20px;
+    width: 170px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    transition: 0.5s;
+}
+.keyword a span{
+    position: absolute;
+    width: 20%;
+    height: 40px;
+    display: inline-block;
+    background-color: #476FAF;
+    border-radius: 50%;
+    bottom: -100%;
+    transition: 0.5s;
+    z-index: -1;
+}
+.keyword a span:nth-child(1){
+    left: 0%;
+}
+.keyword a span:nth-child(2){
+    left: 25%;
+    transition-delay: .1s;
+}
+.keyword a span:nth-child(3){
+    left: 50%;
+    transition-delay: .2s;
+
+}
+.keyword a span:nth-child(4){
+    left: 75%;
+    transition-delay: .3s;
+}
+
+.keyword a:hover span{
+    bottom: 0;
+    transform: scale(1.7, 1.7);
+    
+}
+.keyword a:hover{
+    color: white;
+}
+
+/* 어바웃5 */
